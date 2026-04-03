@@ -1,133 +1,97 @@
-# 🍽️ API Fake - Sistema de Refeições da Cozinha Escolar
+Para que o seu **README** reflita a mudança para o ecossistema da **Vercel** e os dados de **Livros e Alunos** (abandonando o tema de refeições), precisamos atualizar as instruções de instalação e a estrutura de dados.
 
-Este projeto simula uma API RESTful simples para uso em estudos de **desenvolvimento front-end**, utilizando o [JSON Server](https://github.com/typicode/json-server) com dados inspirados em um sistema de refeições escolares.
+Aqui está o README ajustado para o seu novo projeto:
+
+---
+
+# 📚 API Escola React - Sistema de Gestão de Alunos e Biblioteca
+
+Este projeto consiste em uma API RESTful simulada, hospedada na **Vercel**, para gerenciar o cadastro de alunos e o acervo de livros de uma escola. Utiliza o [JSON Server](https://github.com/typicode/json-server) adaptado para ambientes *Serverless*.
 
 ---
 
 ## 🎯 Objetivo
 
-Permitir que estudantes desenvolvam e testem aplicações front-end que:
-
-- Consomem APIs REST com `fetch` ou `axios`
-- Realizam operações de CRUD
-- Trabalham com autenticação (simulada)
-- Implementam lógica de filtros, votos, e associação de dados
-- Entendem relações entre entidades como "usuário", "prato", "votação"
+Servir como backend para o projeto **Escola React**, permitindo:
+- **Persistência de Dados (Desafio 3):** Cadastro e listagem real de livros e alunos via `fetch`.
+- **Integração Full Stack:** Prática de consumo de APIs remotas em vez de arquivos locais estáticos.
+- **Ambiente de Produção:** Demonstração do sistema funcionando online através da Vercel.
 
 ---
 
-## 📦 Estrutura dos Dados
+## 📦 Estrutura dos Dados (`db.json`)
 
-O banco simulado (`db.json`) possui as seguintes "tabelas":
+O banco de dados simulado possui as seguintes entidades:
 
-### 👩‍🍳 `cozinheira`
-
-Contém os dados das cozinheiras que cadastram pratos.
-
+### 👨‍🎓 `alunos`
+Gerenciamento de matrículas e cursos.
 ```json
 {
-  "id_usuario": 1,
-  "nome": "Maria",
-  "email": "maria@cozinha.com",
-  "senha": "senha_segura"
+  "id": "1",
+  "nome": "Maria Silva",
+  "curso": "Informática"
+}
+```
+
+### 📖 `livros`
+Controle do acervo da biblioteca escolar.
+```json
+{
+  "id": "1",
+  "titulo": "Fundamentos de React",
+  "autor": "Maria da Silva"
 }
 ```
 
 ---
 
-### 🍛 `prato`
+## 🚀 Como Rodar Localmente
 
-Pratos cadastrados pelas cozinheiras.
+Se desejar testar as alterações antes de subir para a Vercel:
 
-```json
-{
-  "id_prato": 101,
-  "dia": "2025-06-23",
-  "turno": "Almoço",
-  "principal": "Feijoada",
-  "sobremesa": "Doce de leite",
-  "bebida": "Suco de laranja",
-  "imagem": "feijoada.jpg",
-  "id_usuario": 1
-}
-```
-
----
-
-### 🗳️ `votacao`
-
-Votos anônimos por IP para cada prato.
-
-```json
-{
-  "id_voto": 1,
-  "id_prato": 101,
-  "voto": true,
-  "data_voto": "2025-06-23",
-  "ip_usuario": "192.168.0.1"
-}
-```
-
----
-
-## 🚀 Como Rodar
-
-1. Instale o JSON Server:
-
+1. Instale as dependências:
 ```bash
-npm install -g json-server
+npm install
 ```
 
-2. Inicie o servidor com o arquivo:
-
+2. Inicie o JSON Server local:
 ```bash
-json-server --watch db.json --port 3001
+npx json-server --watch db.json --port 5000
 ```
 
-3. Acesse:
-
-```
-http://localhost:3001/prato_tb
-http://localhost:3001/cozinheira_tb
-http://localhost:3001/votacao_tb
-```
+3. Acesse em seu navegador: `http://localhost:5000/alunos` ou `http://localhost:5000/livros`.
 
 ---
 
-## 🔐 Simulação de Permissões
+## ☁️ Deploy na Vercel
 
-**Alunos (usuários anônimos):**
+Esta API está configurada para rodar como uma **Serverless Function**. 
 
-- Podem **listar pratos**
-- Podem **votar** via `POST` em `/votacao_tb`
+- **Arquivo de Configuração:** `vercel.json` define as rotas e o runtime do Node.js.
+- **Ponto de Entrada:** `api/server.js` inicializa o motor do JSON Server.
 
-**Cozinheiras (login simulado):**
-
-- Podem **cadastrar, editar e excluir** seus próprios pratos
-- Só acessam pratos vinculados ao seu `id_usuario`
+> **Nota:** Por ser um ambiente *read-only* após o build, cadastros realizados na versão online são mantidos na memória temporária do servidor. Para persistência permanente em disco, recomenda-se o uso de bancos de dados como MongoDB ou Supabase.
 
 ---
 
-## 💡 Sugestões de Exercícios com Front-End
+## 🛠️ Tecnologias Utilizadas
 
-- Página pública com:
-  - Listagem dos pratos do dia
-  - Filtros por data, turno ou cozinheira
-  - Botão "Curtir" para votar
-
-- Painel administrativo para cozinheira:
-  - Tela de login
-  - Lista e formulário de cadastro e edição de pratos
-  - Validação e proteção de rotas
+- [Node.js](https://nodejs.org/)
+- [JSON Server](https://github.com/typicode/json-server)
+- [Vercel Platform](https://vercel.com/)
 
 ---
 
-## 🧠 Extras
+## 💡 Endpoints Disponíveis
 
-- Simule login com `localStorage` e headers fake
-- Use `axios.interceptors` para simular autenticação
-- Implemente feedbacks visuais para votos e CRUD
+| Recurso | Método | Descrição |
+| :--- | :--- | :--- |
+| `/alunos` | GET | Lista todos os alunos |
+| `/alunos` | POST | Cadastra um novo aluno |
+| `/livros` | GET | Lista todos os livros |
+| `/livros` | POST | Cadastra um novo livro |
+| `/livros/:id`| DELETE| Remove um livro do acervo |
 
 ---
 
-> Projeto educacional para fins de aprendizado e prática com APIs REST. Divirta-se criando! 🎨💻
+> **Aviso:** Este é um projeto de cunho educacional desenvolvido para os desafios de React.js. 🚀
